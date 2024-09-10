@@ -1,6 +1,24 @@
-﻿@{
+﻿@model Input_Forms.Models.ViewModel;
+@{
     ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+<form asp-controller="Home" asp-action="Index" method="post">
+    <label>Sports You Like:</label>
+    @foreach (var checkBox in Model.CheckBoxes)
+    {
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="@checkBox.Value" id="checkBox_@checkBox.Value" name="sports" checked="@checkBox.IsChecked" />
+            <label class="form-check-label" for="term">@checkBox.Text</label>
+        </div>
+    }
+    @* <div class="form-check">
+        <input class="form-check-input" type="checkbox" asp-for="AcceptTerms" />
+        <label class="form-check-label" for="term">@Model.Text</label>
+    </div> *@
+    <br />
+    <input type="submit" value="Submit" class="btn btn-success" />
+</form>

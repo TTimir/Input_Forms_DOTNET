@@ -1,4 +1,8 @@
-﻿@{
+﻿@using Input_Forms.Controllers;
+@model Input_Forms.Models.StudentModel;
+
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,3 +10,38 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+@* Using Enum *@
+@* <label class="form-label">Gender</label>
+@Html.DropDownList("Gender", Html.GetEnumSelectList<Gender>(), "--Select Gender--", new { @class = "form-control" })
+<br /> *@
+
+@* Using List<> *@
+@* <label class="form-label">Gender</label>
+@Html.DropDownList("Gender", ViewBag.Gender, "--Select Gender--", new { @class = "form-control" })
+<br /> *@
+
+@* Using TagHelper *@
+@* <label class="form-label">Gender</label>
+<select name="Gender" asp-items="@ViewBag.Gender" class="form-control">
+    <option value="">Select Gender</option>
+</select>
+<br /> *@
+
+@* Binding DDL *@
+<form asp-controller="Home" asp-action="Index" method="post">
+    <label class="form-label">Gender</label>
+    @* <select name="Id" asp-items="@(new SelectList(Model.StudentList, "Value", "Text"))" class="form-control">
+    
+    </select> *@
+    @Html.DropDownListFor(x => x.Id, new SelectList(Model.StudentList, "Value", "Text"), "--Select Gender--", new { @class = "form-control" })
+    <br />
+    <input type="submit" value="Submit" class="btn btn-success" />
+</form>
+<br />
+@{
+    if (ViewBag.SelectedValue != null)
+    {
+        <h2>Selected Student Name: @ViewBag.SelectedValue</h2>
+    }
+}
